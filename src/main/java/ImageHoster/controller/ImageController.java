@@ -161,8 +161,9 @@ public class ImageController {
         newComment.setImage(image);
         newComment.setText(comment);
 
-        this.imageService.updateImage(updatedImage);
-        //create a new comment in the database
+        //create a new comment in the database*/
+
+        this.imageService.createComment(newComment);
 
         return this.showImage(imageId,imageTitle,model);
 
