@@ -113,4 +113,19 @@ public class ImageRepository {
         }
     }
 
+    public boolean confirmOwner(Integer id,String userName){
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Image> typedQuery = em.createQuery("SELECT i from Image i where i.id =:id ", Image.class).setParameter("id", id);
+            if(typedQuery.getSingleResult().getUser().getUsername().equalsIgnoreCase(userName)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (NoResultException e) {
+            return false;
+        }
+    }
+
 }
