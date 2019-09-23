@@ -5,6 +5,9 @@ import ImageHoster.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Service
 public class UserService {
 
@@ -12,8 +15,15 @@ public class UserService {
     private UserRepository userRepository;
 
     //Call the registerUser() method in the UserRepository class to persist the user record in the database
-    public void registerUser(User newUser) {
-        userRepository.registerUser(newUser);
+    public boolean registerUser(User newUser) {
+
+        if(this.isPasswordValid(newUser.getPassword())){
+            //password is valid so persist the user
+            userRepository.registerUser(newUser);
+            return true;
+        }
+        else return false;
+
     }
 
     //Since we did not have any user in the database, therefore the user with username 'upgrad' and password 'password' was hard-coded
@@ -30,6 +40,32 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public boolean isPasswordValid(String password){
+
+        boolean isValid = false;
+
+        //check at least one number
+        Pattern numbers = Pattern.compile( "[0-9]" );
+        Matcher numbersMatcher = numbers.matcher( password );
+
+        //check at least one alphabet
+        Pattern alphabets = Pattern.compile( "[a-zA-Z]" );
+        Matcher alphabetsMatcher = alphabets.matcher( password );
+
+        //check at least one special character
+        Pattern special = Pattern.compile( "[^a-z A-Z0-9]" );
+        Matcher specialMatcher = special.matcher( password );
+
+        boolean oneNumber = numbersMatcher.find();
+        boolean oneAlphabet = alphabetsMatcher.find();
+        boolean oneSpecial = specialMatcher.find();
+
+        if(oneAlphabet && oneNumber && oneSpecial)
+            isValid = true;
+
+        return isValid;
     }
 
 }
