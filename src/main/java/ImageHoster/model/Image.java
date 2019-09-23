@@ -52,6 +52,17 @@ public class Image {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Tag> tags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "image" , cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     public Image() {
     }
 
