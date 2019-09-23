@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -146,18 +147,19 @@ public class ImageController {
     @RequestMapping(value = "/image/{imageId}/{imageTitle}/comments", method = RequestMethod.POST)
     public String createComment(@PathVariable("imageId") Integer imageId,
                               @PathVariable("imageTitle") String imageTitle,
+                                @RequestParam("comment") String comment,
                               HttpSession session,
-                              Comment comment,
+                              Comment newComment,
                               Image updatedImage, Model model){
 
         User user = (User) session.getAttribute("loggeduser");
-        comment.setUser(user);
+        newComment.setUser(user);
 
         Image image = this.imageService.getImage(imageId);
-        comment.setCreatedDate(new Locale());
-        System.out.println();
-        System.out.println();
-        System.out.println();
+        newComment.setCreatedDate(LocalDate.now());
+        newComment.setId(imageId);
+        newComment.setImage(image);
+        newComment.setText(comment);
 
         this.imageService.updateImage(updatedImage);
         //create a new comment in the database
