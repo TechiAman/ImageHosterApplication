@@ -9,9 +9,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
+
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/imageHoster"/>
-
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="trak@123"/>
 
@@ -21,7 +21,6 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/> <!-- update -->
             <property name="hibernate.show_sql" value="true"/> <!-- Show SQL in console -->
             <property name="hibernate.format_sql" value="true"/> <!-- Show SQL formatted -->
-
 
         </properties>
 
